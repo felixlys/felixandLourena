@@ -1,0 +1,952 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Fredoka:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+:root {
+    font-family: 'Nunito', sans-serif;
+    color: #263449;
+    background: #FFF4B8;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    --minion-yellow: #FFD928;
+    --minion-yellow-light: #FFF4B8;
+    --minion-yellow-dark: #E9B900;
+    --minion-blue: #2864A5;
+    --minion-blue-dark: #173B68;
+    --minion-cream: #FFFBEA;
+    --minion-text: #263449;
+    --minion-muted: #5D6470;
+    --minion-border: rgba(38, 52, 73, 0.18);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-width: 320px;
+    min-height: 100%;
+    background: var(--minion-yellow-light);
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    color: var(--minion-text);
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+button:focus-visible {
+    outline: 3px solid var(--minion-blue);
+    outline-offset: 4px;
+}
+
+::selection {
+    color: #173B68;
+    background: #FFE66D;
+}
+
+.app-shell {
+    isolation: isolate;
+    min-height: 100vh;
+    background: var(--minion-yellow-light);
+    color: var(--minion-text);
+}
+
+/* Semua halaman */
+.intro-screen,
+.quiz-screen {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    color: var(--minion-text);
+    background:
+        radial-gradient(
+            circle at 12% 15%,
+            rgba(255, 255, 255, 0.85),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 88% 80%,
+            rgba(255, 217, 40, 0.35),
+            transparent 28%
+        ),
+        linear-gradient(
+            145deg,
+            #FFF9D9 0%,
+            #FFF0A6 52%,
+            #FFE16B 100%
+        );
+}
+
+/* Polkadot halus */
+.intro-screen::after,
+.quiz-screen::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.17;
+    background-image: radial-gradient(#D6A900 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+/* Cahaya dekoratif */
+.ambient-light {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    width: min(90vw, 760px);
+    aspect-ratio: 1;
+    transform: translate(-50%, -15%);
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.65),
+        rgba(255, 217, 40, 0.14) 42%,
+        transparent 70%
+    );
+    pointer-events: none;
+}
+
+/* Tipografi */
+.intro-title,
+.minion-heading {
+    color: var(--minion-blue-dark);
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+}
+
+.eyebrow,
+.chapter-label {
+    color: #52627A;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    line-height: 1.7;
+}
+
+/* Penyesuaian warna teks lama */
+.intro-screen [class*="text-[#4A3824]"],
+.quiz-screen [class*="text-[#4A3824]"] {
+    color: var(--minion-blue-dark) !important;
+}
+
+.intro-screen [class*="text-[#705A3B]"],
+.quiz-screen [class*="text-[#705A3B]"] {
+    color: #52627A !important;
+}
+
+.intro-screen [class*="text-[#8E6D30]"],
+.quiz-screen [class*="text-[#8E6D30]"] {
+    color: var(--minion-blue) !important;
+}
+
+.intro-screen [class*="text-[#9C762E]"],
+.quiz-screen [class*="text-[#9C762E]"] {
+    color: var(--minion-blue) !important;
+}
+
+/* Tombol */
+.intro-screen button,
+.quiz-screen button {
+    color: var(--minion-blue-dark);
+}
+
+.intro-screen button:not(:disabled):hover,
+.quiz-screen button:not(:disabled):hover {
+    border-color: var(--minion-blue);
+}
+
+.minion-primary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 50px;
+    padding: 13px 22px;
+    border: 2px solid var(--minion-blue-dark);
+    border-radius: 999px;
+    background: var(--minion-blue);
+    color: white !important;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    box-shadow: 0 5px 0 var(--minion-blue-dark);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.minion-primary-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 var(--minion-blue-dark);
+}
+
+.minion-primary-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 var(--minion-blue-dark);
+}
+
+/* Kartu */
+.minion-card {
+    border: 2px solid rgba(40, 100, 165, 0.2);
+    border-radius: 22px;
+    background: rgba(255, 251, 234, 0.88);
+    box-shadow: 0 8px 0 rgba(40, 100, 165, 0.10);
+}
+
+/* Dekorasi karakter Minion */
+.minion-buddy {
+    position: relative;
+    width: 100px;
+    height: 142px;
+    flex: 0 0 auto;
+    border: 3px solid #D5A900;
+    border-radius: 48% 48% 35% 35%;
+    background: linear-gradient(90deg, #F3BD00, #FFE34B 48%, #F5C500);
+    box-shadow: inset -8px 0 rgba(190, 140, 0, 0.12);
+}
+
+.minion-hair {
+    position: absolute;
+    top: -10px;
+    left: 44px;
+    width: 3px;
+    height: 15px;
+    border-radius: 4px;
+    background: #263449;
+    transform: rotate(12deg);
+}
+
+.minion-goggles {
+    position: absolute;
+    top: 30px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 74px;
+    height: 39px;
+    border: 7px solid #AAB4BF;
+    border-radius: 24px;
+    background: #E7EDF1;
+    box-shadow: 0 2px 0 #65717D;
+}
+
+.minion-eye {
+    width: 23px;
+    height: 23px;
+    border: 2px solid #65717D;
+    border-radius: 50%;
+    background: white;
+}
+
+.minion-eye::after {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    margin: 6px;
+    border-radius: 50%;
+    background: #263449;
+}
+
+.minion-smile {
+    position: absolute;
+    top: 78px;
+    left: 37px;
+    width: 27px;
+    height: 12px;
+    border-bottom: 3px solid #263449;
+    border-radius: 0 0 50% 50%;
+}
+
+.minion-overall {
+    position: absolute;
+    right: 8px;
+    bottom: -2px;
+    left: 8px;
+    height: 48px;
+    border: 2px solid #173B68;
+    border-radius: 9px 9px 25px 25px;
+    background: #2864A5;
+}
+
+.minion-overall::before,
+.minion-overall::after {
+    content: '';
+    position: absolute;
+    top: -13px;
+    width: 9px;
+    height: 23px;
+    border: 2px solid #173B68;
+    border-radius: 5px;
+    background: #2864A5;
+}
+
+.minion-overall::before {
+    left: 8px;
+    transform: rotate(12deg);
+}
+
+.minion-overall::after {
+    right: 8px;
+    transform: rotate(-12deg);
+}
+
+.minion-pocket {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    width: 25px;
+    height: 17px;
+    transform: translateX(-50%);
+    border: 2px solid #173B68;
+    border-radius: 4px;
+}
+
+/* Dekorasi mengambang */
+.minion-float {
+    animation: minion-float 3s ease-in-out infinite;
+}
+
+@keyframes minion-float {
+    0%, 100% {
+        transform: translateY(0) rotate(-2deg);
+    }
+    50% {
+        transform: translateY(-9px) rotate(2deg);
+    }
+}
+
+/* Area kuis */
+.quiz-screen {
+    min-height: 100vh;
+}
+
+.quiz-screen .minion-card {
+    background: #FFFBEA;
+}
+
+.quiz-screen img {
+    border-radius: 12px;
+}
+
+@media (max-width: 380px) {
+    .eyebrow,
+    .chapter-label {
+        font-size: 8px;
+    }
+
+    .minion-buddy {
+        transform: scale(0.85);
+        transform-origin: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Override komponen kuis yang masih menggunakan palet lama */
+.quiz-screen [class*="bg-[#F4EAC5]"],
+.quiz-screen [class*="bg-[#FFF8E4]"] {
+    background-color: #FFFBEA !important;
+}
+
+.quiz-screen [class*="bg-[#E5D9B4]"] {
+    background-color: #FCEAA0 !important;
+}
+
+.quiz-screen [class*="border-[#8C7548]"] {
+    border-color: rgba(40, 100, 165, 0.25) !important;
+}
+
+.quiz-screen [class*="border-[#9C762E]"] {
+    border-color: #2864A5 !important;
+}
+
+.quiz-screen [class*="ring-[#9C762E]"] {
+    --tw-ring-color: rgba(40, 100, 165, 0.25) !important;
+}
+
+.quiz-screen [class*="bg-[#D8BC70]"] {
+    background-color: rgba(255, 217, 40, 0.25) !important;
+}
+
+.quiz-screen [class*="bg-[#4A3824]"] {
+    background-color: rgba(23, 59, 104, 0.78) !important;
+}
+
+.quiz-screen [class*="bg-[#9C762E]"] {
+    background-color: #2864A5 !important;
+}
+
+.quiz-screen [class*="text-[#8E6D30]"] {
+    color: #2864A5 !important;
+}
+
+.quiz-screen [class*="text-[#705A3B]"] {
+    color: #52627A !important;
+}
+
+.quiz-screen [class*="text-[#4A3824]"] {
+    color: #173B68 !important;
+}
+
+/* Indikator progres */
+.quiz-screen [class*="bg-[#705A3B]"] {
+    background-color: rgba(40, 100, 165, 0.16) !important;
+}
+
+.quiz-screen [class*="bg-[#9C762E]"] {
+    background-color: #2864A5 !important;
+}
+
+/* Kartu pilihan jawaban */
+.quiz-screen button[class*="border"] {
+    border-radius: 14px;
+}
+
+.quiz-screen button:disabled {
+    opacity: 1;
+}
+
+.minion-section-label {
+    color: #2864A5;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+}
+
+.minion-heading {
+    color: #173B68;
+    font-weight: 900;
+    letter-spacing: -0.045em;
+    line-height: 1.08;
+}
+
+.minion-primary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 2px solid #173B68;
+    border-radius: 999px;
+    background: #FFD928;
+    padding: 13px 23px;
+    color: #173B68;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    box-shadow: 0 5px 0 #173B68;
+    transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.minion-primary-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 #173B68;
+}
+
+.minion-primary-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 #173B68;
+}
+
+.minion-secondary-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid #2864A5;
+    border-radius: 999px;
+    background: #fff;
+    padding: 10px 16px;
+    color: #173B68;
+    font-size: 11px;
+    font-weight: 800;
+    transition: background 160ms ease;
+}
+
+.minion-secondary-button:hover {
+    background: #FFF4B8;
+}
+
+.minion-icon-button {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border: 2px solid #2864A5;
+    border-radius: 50%;
+    background: #FFD928;
+    color: #173B68;
+    transition: transform 160ms ease;
+}
+
+.minion-icon-button:hover {
+    transform: scale(1.08);
+}
+
+.minion-world-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.banana {
+    position: absolute;
+    font-size: 28px;
+    opacity: 0.7;
+    animation: banana-float 4s ease-in-out infinite;
+}
+
+.banana-one {
+    top: 30%;
+    left: 12%;
+}
+
+.banana-two {
+    top: 55%;
+    right: 13%;
+    animation-delay: 1s;
+}
+
+.banana-three {
+    bottom: 17%;
+    left: 43%;
+    animation-delay: 2s;
+}
+
+.minion-cloud {
+    position: absolute;
+    color: #FFD928;
+    font-size: 35px;
+    animation: star-twinkle 2.5s ease-in-out infinite;
+}
+
+.cloud-one {
+    top: 17%;
+    left: 42%;
+}
+
+.cloud-two {
+    bottom: 25%;
+    right: 35%;
+    animation-delay: 1s;
+}
+
+@keyframes banana-float {
+    0%, 100% {
+        transform: translateY(0) rotate(-12deg);
+    }
+    50% {
+        transform: translateY(-15px) rotate(12deg);
+    }
+}
+
+@keyframes star-twinkle {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(0.8) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(20deg);
+    }
+}
+
+@media (max-width: 640px) {
+    .banana-one {
+        top: 22%;
+        left: 4%;
+    }
+
+    .banana-two {
+        top: 58%;
+        right: 4%;
+    }
+
+    .banana-three {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .banana,
+    .minion-cloud {
+        animation: none;
+    }
+}
+
+/* =========================================
+   MINIONS WORLD - MEMORY QUIZ
+========================================= */
+
+.quiz-screen {
+    background:
+        radial-gradient(
+            ellipse at 15% 20%,
+            #fff9d9 0%,
+            transparent 35%
+        ),
+        radial-gradient(
+            ellipse at 90% 80%,
+            #dceaff 0%,
+            transparent 35%
+        ),
+        #FFF4B8;
+}
+
+.quiz-screen .eyebrow {
+    color: #2864A5;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+}
+
+.quiz-screen .chapter-label {
+    color: #173B68;
+    font-weight: 900;
+}
+
+.quiz-screen .minion-heading {
+    color: #173B68;
+    font-weight: 900;
+    letter-spacing: -0.045em;
+    line-height: 1.08;
+}
+
+.quiz-screen .minion-primary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 2px solid #173B68;
+    border-radius: 999px;
+    background: #FFD928;
+    padding: 13px 20px;
+    color: #173B68;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    box-shadow: 0 5px 0 #173B68;
+    transition: 0.2s ease;
+}
+
+.quiz-screen .minion-primary-button:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 0 #173B68;
+}
+
+.quiz-screen .minion-secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 2px solid #2864A5;
+    border-radius: 999px;
+    background: white;
+    padding: 10px 15px;
+    color: #173B68;
+    font-size: 10px;
+    font-weight: 900;
+    transition: 0.2s ease;
+}
+
+.quiz-screen .minion-secondary-button:hover {
+    background: #FFF4B8;
+}
+
+.quiz-screen .minion-world-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.quiz-screen .banana {
+    position: absolute;
+    font-size: 25px;
+    opacity: 0.55;
+    animation: banana-float 4s ease-in-out infinite;
+}
+
+.quiz-screen .banana-one {
+    top: 30%;
+    left: 10%;
+}
+
+.quiz-screen .banana-two {
+    top: 55%;
+    right: 12%;
+    animation-delay: 1s;
+}
+
+.quiz-screen .banana-three {
+    bottom: 15%;
+    left: 45%;
+    animation-delay: 2s;
+}
+
+.quiz-screen .minion-cloud {
+    position: absolute;
+    color: #E5AE00;
+    font-size: 30px;
+    animation: star-twinkle 2.5s ease-in-out infinite;
+}
+
+.quiz-screen .cloud-one {
+    top: 15%;
+    left: 45%;
+}
+
+.quiz-screen .cloud-two {
+    bottom: 25%;
+    right: 35%;
+    animation-delay: 1s;
+}
+
+@keyframes banana-float {
+    0%, 100% {
+        transform: translateY(0) rotate(-12deg);
+    }
+
+    50% {
+        transform: translateY(-15px) rotate(12deg);
+    }
+}
+
+@keyframes star-twinkle {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(0.8) rotate(0deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(20deg);
+    }
+}
+
+@media (max-width: 640px) {
+    .quiz-screen .banana-one {
+        top: 20%;
+        left: 3%;
+    }
+
+    .quiz-screen .banana-two {
+        top: 60%;
+        right: 3%;
+    }
+
+    .quiz-screen .banana-three {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .quiz-screen .banana,
+    .quiz-screen .minion-cloud {
+        animation: none;
+    }
+}
+
+/* =========================================
+   STORY TRANSITION - MINIONS WORLD
+========================================= */
+
+.story-transition-screen {
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(255, 217, 40, 0.22),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 75%,
+            rgba(40, 100, 165, 0.14),
+            transparent 32%
+        ),
+        #FFF4B8;
+}
+
+.story-transition-screen .eyebrow {
+    color: #2864A5;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+}
+
+.story-world-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.story-banana {
+    position: absolute;
+    font-size: 30px;
+    opacity: 0.55;
+    animation: story-banana-float 4s ease-in-out infinite;
+}
+
+.story-banana.banana-one {
+    top: 20%;
+    left: 8%;
+}
+
+.story-banana.banana-two {
+    top: 55%;
+    right: 8%;
+    animation-delay: 1s;
+}
+
+.story-banana.banana-three {
+    bottom: 12%;
+    left: 40%;
+    animation-delay: 2s;
+}
+
+.story-star {
+    position: absolute;
+    color: #E5AE00;
+    font-size: 30px;
+    animation: story-star-twinkle 2.5s ease-in-out infinite;
+}
+
+.story-star.star-one {
+    top: 18%;
+    right: 35%;
+}
+
+.story-star.star-two {
+    top: 65%;
+    left: 15%;
+    animation-delay: 0.8s;
+}
+
+.story-star.star-three {
+    bottom: 20%;
+    right: 30%;
+    animation-delay: 1.3s;
+}
+
+.story-cloud {
+    position: absolute;
+    width: 90px;
+    height: 28px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.story-cloud::before,
+.story-cloud::after {
+    position: absolute;
+    content: '';
+    border-radius: 50%;
+    background: inherit;
+}
+
+.story-cloud::before {
+    width: 38px;
+    height: 38px;
+    left: 15px;
+    top: -17px;
+}
+
+.story-cloud::after {
+    width: 48px;
+    height: 48px;
+    right: 10px;
+    top: -22px;
+}
+
+.story-cloud.cloud-one {
+    top: 30%;
+    right: 15%;
+}
+
+.story-cloud.cloud-two {
+    bottom: 25%;
+    left: 5%;
+    transform: scale(0.7);
+}
+
+.story-card {
+    transition: transform 0.3s ease;
+}
+
+.story-card:hover {
+    transform: translateY(-3px);
+}
+
+@keyframes story-banana-float {
+    0%, 100% {
+        transform: translateY(0) rotate(-12deg);
+    }
+
+    50% {
+        transform: translateY(-14px) rotate(12deg);
+    }
+}
+
+@keyframes story-star-twinkle {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(0.8) rotate(0deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(20deg);
+    }
+}
+
+@media (max-width: 640px) {
+    .story-banana.banana-one {
+        top: 16%;
+        left: 2%;
+    }
+
+    .story-banana.banana-two {
+        top: 60%;
+        right: 2%;
+    }
+
+    .story-banana.banana-three {
+        display: none;
+    }
+
+    .story-cloud {
+        opacity: 0.5;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .story-banana,
+    .story-star {
+        animation: none;
+    }
+}
+
